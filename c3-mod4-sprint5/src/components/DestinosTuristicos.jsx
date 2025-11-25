@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useWatchlist } from "../context/WatchlistContext";
@@ -12,7 +12,24 @@ const DestinosTuristicos = () => {
 
   const { addToWatchlist } = useWatchlist();
 
-  // Obtener por cantidad
+  // Cargar 3 destinos al iniciar
+    useEffect(() => {
+      const cargarDestinosIniciales = async () => {
+        try {
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_SERVTUR_KEY}?page=1&limit=3`
+          );
+          setTuristicos(data);
+        } catch (err) {
+          console.error(err);
+          toast.error("Error al cargar los destinos iniciales.");
+        }
+      };
+  
+      cargarDestinosIniciales();
+    }, []);
+
+  /*// Obtener por cantidad
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -35,7 +52,7 @@ const DestinosTuristicos = () => {
       console.error(err);
       toast.error("Error al obtener los servicios turísticos.");
     }
-  };
+  };*/
 
   // Buscar por nombre
   const handleBusqueda = async (e) => {
@@ -71,11 +88,12 @@ const DestinosTuristicos = () => {
   return (
     <div
       id="servicios"
-      className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6 pt-[98px]"
+      className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6 pt-[120px]"
     >
-      <h1 className="text-3xl font-bold mb-6">Destinos</h1>
+      <h1 className="text-6xl font-serif mb-6">Destinos</h1>
+      <h2 className="text-3xl p-4 mb-6">Explora los destinos imperdibles para tus próximas aventuras en Fiambalá.</h2>
 
-      {/* Formulario por cantidad */}
+      {/* Formulario por cantidad 
       <form onSubmit={handleSubmit} className="mb-6 flex items-center gap-3">
         <input
           type="number"
@@ -88,7 +106,7 @@ const DestinosTuristicos = () => {
           Obtener Destinos
         </Button>
       </form>
-
+      */}
       {/* Formulario por búsqueda */}
       <form onSubmit={handleBusqueda} className="mb-6 flex items-center gap-3">
         <input
