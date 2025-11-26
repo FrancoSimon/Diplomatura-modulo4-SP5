@@ -271,41 +271,38 @@ const DestinosTuristicos = () => {
   return (
     <div
       id="servicios"
-      className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6 pt-[120px]"
+      className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-500 text-white flex flex-col items-center p-6 pt-[120px]"
     >
       <h1 className="text-6xl font-serif mb-6">Destinos</h1>
-      <h2 className="text-3xl p-4 mb-6">
+      <h2 className="text-3xl p-4 mb-6 text-center">
         Explora los destinos imperdibles para tus próximas aventuras en
         Fiambalá.
       </h2>
 
-      {/* Formulario por búsqueda */}
-      <form onSubmit={handleBusqueda} className="mb-6 flex items-center gap-3">
-        <input
-          type="text"
-          placeholder="Buscar por nombre..."
-          className="p-2 rounded bg-gray-800 border shadow shadow-gray-200"
-          value={search}
-          onChange={(e) => {
-            const soloTexto = e.target.value.replace(
-              /[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g,
-              ""
-            );
-            setSearch(soloTexto);
-          }}
-        />
-        <Button type="submit" variant="primary">
-          Buscar Destino
-        </Button>
-        <Button
-          onClick={handleOpenAddModal}
-          variant="secondary"
-          className="ml-2"
+      {/* Formulario por búsqueda - ALINEADOS HORIZONTALMENTE */}
+      <div className="mb-6 flex flex-row items-center justify-center gap-3 w-full max-w-2xl">
+        <form
+          onSubmit={handleBusqueda}
+          className="flex flex-1 items-center gap-3"
         >
-          <i className="bi bi-plus-circle text-green-500 mr-2"></i>
-          Agregar Destino
-        </Button>
-        {/* {search && (
+          <input
+            type="text"
+            placeholder="Buscar por nombre..."
+            className="flex-1 p-2 rounded bg-gray-800 border border-gray-600 text-white min-w-[200px]"
+            value={search}
+            onChange={(e) => {
+              const soloTexto = e.target.value.replace(
+                /[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g,
+                ""
+              );
+              setSearch(soloTexto);
+            }}
+          />
+          <Button type="submit" variant="primary" className="whitespace-nowrap">
+            Buscar Destino
+          </Button>
+
+          {/* {search && (
           <Button 
             type="button" 
             onClick={limpiarBusqueda} 
@@ -314,8 +311,16 @@ const DestinosTuristicos = () => {
             Limpiar
           </Button>
         )}*/}
-      </form>
-
+        </form>
+        <Button
+          onClick={handleOpenAddModal}
+          variant="primary"
+          className="whitespace-nowrap"
+        >
+          <i className="bi bi-plus-circle text-green-500 mr-2"></i>
+          Agregar Destino
+        </Button>
+      </div>
       {error && <p className="mt-4 text-red-500">{error}</p>}
 
       {/* Resultado */}
@@ -340,25 +345,32 @@ const DestinosTuristicos = () => {
                 </p>
               </div>
 
-              <div className="flex justify-center mt-4">
+              <div className="flex justify-between mt-4 gap-1">
                 <Button
                   onClick={() => addToWatchlist(turistico)}
-                  variant="tertiary"
+                  className="group bg-transparent p-1 relative"
                 >
-                  <i className="bi bi-heart-fill text-red-500"></i>
-                  Favoritos
+                  <i className="bi bi-heart-fill text-red-500 hover:text-black transition-colors"></i>
+
+                  <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-black text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition">
+                    Quitar
+                  </span>
                 </Button>
                 <Button
                   onClick={() => handleEliminar(turistico.id)}
                   variant="tertiary"
+                  className="flex-1 text-xs px-2 py-1 min-w-0"
                 >
-                  <i className="bi bi-trash3 text-red-500"></i> Eliminar
+                  <i className="bi bi-trash3 text-red-500 text-xs"></i>
+                  <span className="hidden sm:inline"></span>
                 </Button>
                 <Button
                   onClick={() => handleEditar(turistico)}
                   variant="tertiary"
+                  className="flex-1 text-xs px-2 py-1 min-w-0"
                 >
-                  <i className="bi bi-pencil-square text-red-500"></i>Editar
+                  <i className="bi bi-pencil-square text-red-500 text-xs"></i>
+                  <span className="hidden sm:inline"></span>
                 </Button>
               </div>
             </div>
@@ -374,7 +386,7 @@ const DestinosTuristicos = () => {
 
       {/* Modal de Edición */}
       {editingDestino && (
-        <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
           <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-md">
             <h3 className="text-2xl font-semibold mb-4">Editar Destino</h3>
 

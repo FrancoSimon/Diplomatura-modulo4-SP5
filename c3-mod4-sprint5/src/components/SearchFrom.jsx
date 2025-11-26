@@ -23,9 +23,10 @@ const SearchForm = () => {
         type="text"
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        placeholder="Ingrese ciudad o provincia"
-        className="p-2 bg-white border border-gray-700 rounded  shadow shadow-white w-64"
+        placeholder="Ingrese ciudad/provincia"
+        className="p-2 bg-white border border-gray-700 rounded  shadow shadow-white w-full"
       />
+
       <Button type="submit" variant="primary">
         Buscar
       </Button>

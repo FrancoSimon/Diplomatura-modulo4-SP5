@@ -4,6 +4,7 @@ import { Header } from "../components/Header.jsx";
 import DestinosTuristicos from "../components/DestinosTuristicos.jsx";
 import WeatherCard from "../components/WeatherCard.jsx";
 import SearchForm from "../components/SearchFrom.jsx";
+import ContactoForm from "../components/ContactoFrom.jsx";
 
 const RoutesApp = () => {
   return (
@@ -16,9 +17,9 @@ const RoutesApp = () => {
             <DestinosTuristicos />
             <div
               id="clima"
-              className="flex flex-col items-center justify-center bg-gray-300 p-4 pt-22"
+              className="flex flex-col items-center justify-center bg-gray-300 p-4"
             >
-              <h1 className="text-3xl font-bold">Pronóstico del tiempo</h1>
+              <h1 className="text-3xl font-bold p-3">Pronóstico del tiempo</h1>
               <SearchForm />
               <WeatherCard />
             </div>
@@ -41,7 +42,7 @@ const RoutesApp = () => {
 
       <Route
         path="/contacto"
-        element={<h1 className="text-center p-10 text-3xl">Contacto</h1>}
+        element={<ContactoForm />}
       />
 
       <Route

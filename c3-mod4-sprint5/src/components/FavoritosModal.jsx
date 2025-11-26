@@ -19,7 +19,7 @@ const FavoritosModal = ({
 
           <button
             onClick={onClose}
-            className="group bg-transparent p-1 relative"
+            className="group bg-transparent p-1 relative cursor-pointer"
           >
             <i className="bi bi-x-lg text-gray-600 hover:text-black transition-colors"></i>
             <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-black text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition">
@@ -60,7 +60,7 @@ const FavoritosModal = ({
 
                     <button
                       onClick={() => removeFromWatchlist(d.id)}
-                      className="group bg-transparent p-1 relative"
+                      className="group bg-transparent p-1 relative cursor-pointer"
                     >
                       <i className="bi bi-heartbreak-fill text-red-500 hover:text-black transition-colors"></i>
 
