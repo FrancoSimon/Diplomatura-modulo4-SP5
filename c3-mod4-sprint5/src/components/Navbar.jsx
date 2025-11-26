@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { useWeather } from "../context/WeatherContext";
 import FavoritosModal from "./FavoritosModal";
 import { useWatchlist } from "../context/WatchlistContext";
@@ -8,7 +9,7 @@ import logo from "../assets/logo.png";
 import fiambalaLogo from "../assets/fiambala.png";
 
 const Navbar = () => {
-  // Estados del componente
+  //esatdo del componente
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [favOpen, setFavOpen] = useState(false);
 
@@ -16,16 +17,15 @@ const Navbar = () => {
   const { weatherData, loading, getWeather } = useWeather();
   const { watchlist, removeFromWatchlist } = useWatchlist();
 
-  // Efecto para obtener y actualizar datos del clima
+  //obtener y actualizar datos del clima
   useEffect(() => {
     // Cargar datos iniciales al montar el componente
     getWeather("Fiambalá");
-    
 
     // Configurar actualización automática cada 10 minutos
     const interval = setInterval(() => {
       getWeather("Fiambalá");
-    }, 600000); // 600000 ms = 10 minutos
+    }, 600000);
 
     // Limpieza: eliminar intervalo al desmontar el componente
     return () => clearInterval(interval);
@@ -34,7 +34,7 @@ const Navbar = () => {
   // Función para alternar menú móvil
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // Procesamiento de datos del clima para mostrar en navbar
+  // INFO CLIMA
   let weatherInfo = null;
   if (weatherData && !loading) {
     const { main, weather, dt } = weatherData;
@@ -81,33 +81,32 @@ const Navbar = () => {
     <>
       <nav className="fixed top-0 left-0 w-full bg-black/80 z-50 transition-all duration-300">
         <div className="flex justify-between items-center sm:px-12 sm:py-6 px-4">
-          {/* ===== LOGO Y CLIMA ===== */}
+          {/* Logo y Clima */}
           <div className="flex items-center space-x-2">
             {/* Logo principal que redirige al inicio */}
-            <a className="flex items-center cursor-pointer" href="/">
+            <Link to="/" className="flex items-center cursor-pointer">
               <img
-                src={logo} // Usar imagen importada
-                alt="Logo de Fiambalá"
-                className="w-[60px] hover:opacity-80 transition-opacity"
+                src={logo}
+                alt="Logo"
+                className="w-[60px] hover:opacity-80"
               />
               <img
-                src={fiambalaLogo} // Usar imagen importada
-                alt="Texto Fiambalá"
-                className="w-[60px] hover:opacity-80 transition-opacity"
+                src={fiambalaLogo}
+                alt="fiambala"
+                className="w-[60px] hover:opacity-80"
               />
-            </a>
+            </Link>
 
-            {/* Información del clima que redirige a sección clima */}
-            <a href="#clima" className="flex items-center cursor-pointer">
+            <Link to="/clima" className="flex items-center cursor-pointer">
               {weatherInfo}
-            </a>
+            </Link>
           </div>
 
-          {/* ===== BOTÓN HAMBURGUESA (MÓVIL) ===== */}
+          {/* BOTON MOVIL */}
           <button
             className="md:hidden text-white p-2"
             onClick={toggleMenu}
-            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-label="menu"
           >
             <svg
               className="w-6 h-6"
@@ -115,69 +114,64 @@ const Navbar = () => {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              {/* Icono cambia entre hamburguesa y X */}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
                 d={
                   isMenuOpen
-                    ? "M6 18L18 6M6 6l12 12" // Icono X
-                    : "M4 6h16M4 12h16M4 18h16" // Icono hamburguesa
+                    ? "M6 18L18 6M6 6l12 12"
+                    : "M4 6h16M4 12h16M4 18h16"
                 }
               />
             </svg>
           </button>
 
-          {/* ===== MENÚ PRINCIPAL (ESCRITORIO) ===== */}
+          {/* MENU PRINCIPAL (DESKTOP)  */}
           <div className="hidden md:block">
             <ul className="flex sm:space-x-8 space-x-4 px-4">
               {/* Enlace Inicio */}
               <li>
-                <a
-                  href="/"
-                  className="sm:text-lg text-sm text-white hover:text-orange-400 transition-transform duration-300 transform hover:scale-110 inline-block"
+                <NavLink
+                  to="/"
+                  className="sm:text-lg text-sm text-white hover:text-orange-400"
                 >
                   Inicio
-                </a>
+                </NavLink>
               </li>
 
-              {/* Enlace Destinos */}
               <li>
-                <a
-                  href="#servicios"
-                  className="sm:text-lg text-sm text-white hover:text-orange-400 transition-transform duration-300 transform hover:scale-110 inline-block"
+                <NavLink
+                  to="/destinos"
+                  className="sm:text-lg text-sm text-white hover:text-orange-400"
                 >
                   Destinos
-                </a>
+                </NavLink>
               </li>
 
-              {/* Enlace Clima */}
               <li>
-                <a
-                  href="#clima"
-                  className="sm:text-lg text-sm text-white hover:text-orange-400 transition-transform duration-300 transform hover:scale-110 inline-block"
+                <NavLink
+                  to="/clima"
+                  className="sm:text-lg text-sm text-white hover:text-orange-400"
                 >
                   Clima
-                </a>
+                </NavLink>
               </li>
 
-              {/* Enlace Contacto */}
               <li>
-                <a
-                  href="/"
-                  className="sm:text-lg text-sm text-white hover:text-orange-400 transition-transform duration-300 transform hover:scale-110 inline-block"
+                <NavLink
+                  to="/contacto"
+                  className="sm:text-lg text-sm text-white hover:text-orange-400"
                 >
                   Contacto
-                </a>
+                </NavLink>
               </li>
 
-              {/* Botón Favoritos con contador */}
+              {/* FAVORITOS */}
               <li>
                 <button
-                  className="text-orange-400 hover:text-red-500 block mx-auto relative group cursor-pointer"
+                  className="text-orange-400 hover:text-red-500 relative group cursor-pointer"
                   onClick={() => setFavOpen(true)}
-                  aria-label="Abrir favoritos"
                 >
                   <i className="bi bi-heart-fill"></i>
 
@@ -191,7 +185,6 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-
           {/* ===== REDES SOCIALES (ESCRITORIO) ===== */}
           <div className="hidden md:flex items-center space-x-4">
             <a
@@ -222,52 +215,51 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* ===== MENÚ MÓVIL ===== */}
+        {/* MENU MOVIL */}
         <div
           className={`md:hidden absolute w-full bg-black/80 transition-all duration-300 ${
             isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
         >
           <ul className="flex flex-col px-4 py-2">
-            {/* Los mismos enlaces que en versión desktop pero en columna */}
             <li className="py-2 text-center">
-              <a
-                href="/"
-                className="text-white hover:text-sky-100 block"
+              <Link
+                to="/"
                 onClick={() => setIsMenuOpen(false)}
+                className="text-white"
               >
                 Inicio
-              </a>
+              </Link>
             </li>
 
             <li className="py-2 text-center">
-              <a
-                href="#servicios"
-                className="text-white hover:text-sky-100 block"
+              <Link
+                to="/destinos"
                 onClick={() => setIsMenuOpen(false)}
+                className="text-white"
               >
                 Destinos
-              </a>
+              </Link>
             </li>
 
             <li className="py-2 text-center">
-              <a
-                href="#clima"
-                className="text-white hover:text-sky-100 block"
+              <Link
+                to="/clima"
                 onClick={() => setIsMenuOpen(false)}
+                className="text-white"
               >
                 Clima
-              </a>
+              </Link>
             </li>
 
             <li className="py-2 text-center">
-              <a
-                href="/"
-                className="text-white hover:text-sky-100 block"
+              <Link
+                to="/contacto"
                 onClick={() => setIsMenuOpen(false)}
+                className="text-white"
               >
                 Contacto
-              </a>
+              </Link>
             </li>
 
             {/* Botón Favoritos en móvil */}
@@ -280,37 +272,14 @@ const Navbar = () => {
                 }}
               >
                 <i className="bi bi-heart-fill"></i>
-                Favoritos ({watchlist.length})
+                Favoritos<br/> ({watchlist.length})
               </button>
             </li>
           </ul>
-
-          {/* Redes sociales en versión móvil */}
-          <div className="flex space-x-4 px-4 py-2 border-t bg-black justify-center">
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-sky-100"
-            >
-              <i className="bi bi-instagram"></i>
-            </a>
-            <a
-              href="https://www.github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-sky-100"
-            >
-              <i className="bi bi-github"></i>
-            </a>
-            <a href="/" className="text-white hover:text-sky-100">
-              <i className="bi bi-box-arrow-in-right"></i>
-            </a>
-          </div>
         </div>
       </nav>
 
-      {/* ===== MODAL DE FAVORITOS ===== */}
+      {/* MODAL */}
       <FavoritosModal
         isOpen={favOpen}
         onClose={() => setFavOpen(false)}

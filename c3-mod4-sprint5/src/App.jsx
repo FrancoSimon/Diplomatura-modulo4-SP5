@@ -3,10 +3,9 @@ import { toast, ToastContainer } from "react-toastify";
 
 import Navbar from "./components/Navbar.jsx";
 import { Footer } from "./components/Footer.jsx";
-import { Header } from "./components/Header.jsx";
-import DestinosTuristicos from "./components/DestinosTuristicos.jsx";
-import WeatherCard from "./components/WeatherCard.jsx";
-import SearchForm from "./components/SearchFrom.jsx";
+
+import RoutesApp from "./Router/RoutesApp.jsx";
+
 
 import { WeatherProvider } from "./context/WeatherContext.jsx";
 import { WatchlistProvider } from "./context/WatchlistContext.jsx";
@@ -30,20 +29,7 @@ const App = () => {
 
               <div className="flex flex-col min-h-screen">
                 <main className="grow">
-                  <Header />
-
-                  <DestinosTuristicos />
-
-                  <div
-                    id="clima"
-                    className="flex flex-col items-center justify-center bg-gray-300 p-4 pt-22"
-                  >
-                    <h1 className="text-3xl font-bold">
-                      Pronóstico del tiempo
-                    </h1>
-                    <SearchForm />
-                    <WeatherCard />
-                  </div>
+                  <RoutesApp />
                 </main>
 
                 <Footer />
