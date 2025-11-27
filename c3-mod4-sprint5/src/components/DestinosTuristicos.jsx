@@ -64,7 +64,6 @@ const DestinosTuristicos = () => {
 
       if (resultado.length === 0) {
         toast.error("No se encontraron destinos con ese nombre");
-        // Mantener las tarjetas actuales en lugar de limpiarlas
         return;
       } else {
         setTuristicos(resultado);
@@ -151,7 +150,7 @@ const DestinosTuristicos = () => {
 
       toast.success("Destino actualizado correctamente");
       handleCloseModal();
-      cargarTresDestinos(); // Recargar los destinos
+      cargarTresDestinos();
     } catch (err) {
       console.error(err);
       toast.error("Error al actualizar el destino");
@@ -197,7 +196,6 @@ const DestinosTuristicos = () => {
 
   // Eliminar destino turístico con SweetAlert2
   const handleEliminar = async (id) => {
-    // Encontrar el destino por ID para obtener el nombre
     const destino = turisticos.find((t) => t.id === id);
 
     if (!destino) {
@@ -230,7 +228,6 @@ const DestinosTuristicos = () => {
       try {
         await axios.delete(`${import.meta.env.VITE_SERVTUR_KEY}/${id}`);
 
-        // Mostrar confirmación de éxito
         await Swal.fire({
           title: "¡Eliminado!",
           text: `El destino "${nombreDestino}" ha sido eliminado correctamente.`,
@@ -241,12 +238,10 @@ const DestinosTuristicos = () => {
           iconColor: "#10b981",
         });
 
-        // Recargar automáticamente 3 destinos después de eliminar
         await cargarTresDestinos();
       } catch (err) {
         console.error(err);
 
-        // Mostrar error con SweetAlert2
         await Swal.fire({
           title: "Error",
           text: "No se pudo eliminar el destino turístico.",
@@ -260,35 +255,29 @@ const DestinosTuristicos = () => {
     }
   };
 
-  {
-    /*// Función para limpiar búsqueda y mostrar 3 destinos
-  const limpiarBusqueda = () => {
-    setSearch("");
-    cargarTresDestinos();
-  };
-*/
-  }
   return (
     <div
       id="servicios"
-      className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-500 text-white flex flex-col items-center p-6 pt-[120px]"
+      className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-500 text-white flex flex-col items-center p-4 sm:p-6 pt-24 sm:pt-32"
     >
-      <h1 className="text-6xl font-serif mb-6">Destinos</h1>
-      <h2 className="text-3xl p-4 mb-6 text-center">
-        Explora los destinos imperdibles para tus próximas aventuras en
-        Fiambalá.
+      {/* Títulos */}
+      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif mb-4 sm:mb-6 text-center px-4">
+        Destinos
+      </h1>
+      <h2 className="text-xl sm:text-2xl lg:text-3xl p-4 mb-6 text-center px-4 max-w-4xl">
+        Explora los destinos imperdibles para tus próximas aventuras en Fiambalá.
       </h2>
 
-      {/* Formulario por búsqueda - ALINEADOS HORIZONTALMENTE */}
-      <div className="mb-6 flex flex-row items-center justify-center gap-3 w-full max-w-2xl">
+      {/* Formulario de Búsqueda */}
+      <div className="mb-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 w-full max-w-2xl">
         <form
           onSubmit={handleBusqueda}
-          className="flex flex-1 items-center gap-3"
+          className="flex flex-col sm:flex-row flex-1 items-stretch sm:items-center gap-3 min-w-0"
         >
           <input
             type="text"
             placeholder="Buscar por nombre..."
-            className="flex-1 p-2 rounded bg-gray-800 border border-gray-600 text-white min-w-[200px]"
+            className="flex-1 p-3 sm:p-2 rounded-lg bg-gray-800 border border-gray-600 text-white min-w-0 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
             value={search}
             onChange={(e) => {
               const soloTexto = e.target.value.replace(
@@ -298,127 +287,155 @@ const DestinosTuristicos = () => {
               setSearch(soloTexto);
             }}
           />
-          <Button type="submit" variant="primary" className="whitespace-nowrap">
+          <Button 
+            type="submit" 
+            variant="secondary" 
+            size="auto"
+            className="whitespace-nowrap min-h-[44px] flex items-center justify-center"
+          >
+            <i className="bi bi-search mr-2"></i>
             Buscar Destino
           </Button>
-
-          {/* {search && (
-          <Button 
-            type="button" 
-            onClick={limpiarBusqueda} 
-            variant="secondary"
-          >
-            Limpiar
-          </Button>
-        )}*/}
         </form>
+        
         <Button
           onClick={handleOpenAddModal}
-          variant="primary"
-          className="whitespace-nowrap"
+          variant="secondary"
+          size="auto"
+          className="whitespace-nowrap min-h-[44px] flex items-center justify-center"
         >
           <i className="bi bi-plus-circle text-green-500 mr-2"></i>
           Agregar Destino
         </Button>
       </div>
-      {error && <p className="mt-4 text-red-500">{error}</p>}
 
-      {/* Resultado */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6 w-full max-w-6xl">
+      {error && (
+        <div className="mt-4 p-3 bg-red-900/50 border border-red-700 rounded-lg text-red-200 max-w-2xl w-full text-center">
+          {error}
+        </div>
+      )}
+
+      {/* Grid de Tarjetas*/}
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 w-full max-w-6xl px-4 sm:px-6">
         {Array.isArray(turisticos) && turisticos.length > 0 ? (
           turisticos.map((turistico) => (
             <div
               key={turistico.id}
-              className="bg-gray-800 rounded-2xl shadow-lg p-4 flex flex-col justify-between hover:scale-105 transition-transform duration-200"
+              className="bg-gray-800 rounded-2xl shadow-lg p-4 sm:p-5 flex flex-col justify-between hover:scale-105 transition-transform duration-200 border border-gray-700 hover:border-amber-500/30"
             >
-              <div>
+              <div className="flex-1">
                 <img
                   src={turistico.imagen}
                   alt={turistico.nombre}
-                  className="rounded-xl mb-4 w-full h-40 object-cover"
+                  className="rounded-xl mb-4 w-full h-40 sm:h-48 object-cover"
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/400x300/1f2937/6b7280?text=Imagen+No+Disponible';
+                  }}
                 />
-                <h2 className="text-xl font-semibold mb-2">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-2 line-clamp-2">
                   {turistico.nombre}
                 </h2>
-                <p className="text-sm text-gray-300 mb-3">
+                <p className="text-sm text-gray-300 mb-3 line-clamp-3">
                   {turistico.descripcion}
                 </p>
+                {/*{turistico.precio && (
+                  <div className="flex items-center justify-between mb-3 pt-3 border-t border-gray-700">
+                    <span className="text-sm text-gray-400">Precio:</span>
+                    <span className="text-lg font-bold text-amber-400">
+                      ${turistico.precio.toLocaleString()}
+                    </span>
+                  </div>
+                )}*/}
               </div>
 
-              <div className="flex justify-between mt-4 gap-1">
-                <Button
+              {/* Botones de Acción  */}
+              <div className="flex justify-between mt-4 gap-2">
+                <button
                   onClick={() => addToWatchlist(turistico)}
-                  className="group bg-transparent p-1 relative"
+                  className="group bg-transparent p-2 sm:p-3 rounded-xl border border-white hover:bg-amber-600 hover:border-amber-600 transition-all duration-200 flex-1 flex items-center justify-center relative min-h-[44px]"
                 >
-                  <i className="bi bi-heart-fill text-red-500 hover:text-black transition-colors"></i>
-
-                  <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-black text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition">
-                    Quitar
+                  <i className="bi bi-heart-fill text-white group-hover:text-red-600 transition-colors text-sm sm:text-base"></i>
+                  <span className="sr-only">Agregar Favorito</span>
+                  
+                  <span className="hidden lg:block absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none border border-gray-600 z-20">
+                    Agregar Favorito
                   </span>
-                </Button>
-                <Button
+                </button>
+
+                <button
                   onClick={() => handleEliminar(turistico.id)}
-                  variant="tertiary"
-                  className="flex-1 text-xs px-2 py-1 min-w-0"
+                  className="group bg-transparent p-2 sm:p-3 rounded-xl border border-white hover:bg-amber-600 hover:border-amber-600 transition-all duration-200 flex-1 flex items-center justify-center relative min-h-[44px]"
                 >
-                  <i className="bi bi-trash3 text-red-500 text-xs"></i>
-                  <span className="hidden sm:inline"></span>
-                </Button>
-                <Button
+                  <i className="bi bi-trash3 text-white group-hover:text-black transition-colors text-sm sm:text-base"></i>
+                  <span className="sr-only">Eliminar</span>
+                  
+                  <span className="hidden lg:block absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none border border-gray-600 z-20">
+                    Eliminar
+                  </span>
+                </button>
+
+                <button
                   onClick={() => handleEditar(turistico)}
-                  variant="tertiary"
-                  className="flex-1 text-xs px-2 py-1 min-w-0"
+                  className="group bg-transparent p-2 sm:p-3 rounded-xl border border-white hover:bg-amber-600 hover:border-amber-600 transition-all duration-200 flex-1 flex items-center justify-center relative min-h-[44px]"
                 >
-                  <i className="bi bi-pencil-square text-red-500 text-xs"></i>
-                  <span className="hidden sm:inline"></span>
-                </Button>
+                  <i className="bi bi-pencil-square text-white group-hover:text-green-400 transition-colors text-sm sm:text-base"></i>
+                  <span className="sr-only">Editar</span>
+                  
+                  <span className="hidden lg:block absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none border border-gray-600 z-20">
+                    Editar
+                  </span>
+                </button>
               </div>
             </div>
           ))
         ) : (
-          <div className="col-span-3 text-center py-8">
-            <p className="text-xl text-gray-400">
+          <div className="col-span-3 text-center py-12 sm:py-16">
+            <i className="bi bi-geo-alt-fill text-6xl text-gray-500 mb-4"></i>
+            <p className="text-xl text-gray-400 mb-2">
               No hay destinos para mostrar
+            </p>
+            <p className="text-gray-500 max-w-md mx-auto">
+              {search ? 'Intenta con otros términos de búsqueda' : 'Agrega el primer destino turístico usando el botón "Agregar Destino"'}
             </p>
           </div>
         )}
       </div>
 
-      {/* Modal de Edición */}
+      {/* Modal de Editar */}
       {editingDestino && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-md">
-            <h3 className="text-2xl font-semibold mb-4">Editar Destino</h3>
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 sm:p-6">
+          <div className="bg-gray-800 rounded-2xl p-4 sm:p-6 w-full max-w-md mx-2 sm:mx-0 max-h-[90vh] overflow-y-auto">
+            <h3 className="text-2xl font-semibold mb-4 text-white">Editar Destino</h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Nombre</label>
+                <label className="block text-sm font-medium mb-2 text-gray-300">Nombre</label>
                 <input
                   type="text"
                   name="nombre"
                   value={editForm.nombre}
                   onChange={handleInputChange}
-                  className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white"
+                  className="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   placeholder="Nombre del destino"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-2 text-gray-300">
                   Descripción
                 </label>
                 <textarea
                   name="descripcion"
                   value={editForm.descripcion}
                   onChange={handleInputChange}
-                  rows="3"
-                  className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white resize-none"
+                  rows="4"
+                  className="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white resize-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   placeholder="Descripción del destino"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-2 text-gray-300">
                   URL de la Imagen
                 </label>
                 <input
@@ -426,17 +443,25 @@ const DestinosTuristicos = () => {
                   name="imagen"
                   value={editForm.imagen}
                   onChange={handleInputChange}
-                  className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white"
+                  className="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   placeholder="https://ejemplo.com/imagen.jpg"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 mt-6">
-              <Button onClick={handleCloseModal} variant="secondary">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
+              <Button 
+                onClick={handleCloseModal} 
+                variant="secondary"
+                className="flex-1 sm:flex-none"
+              >
                 Cancelar
               </Button>
-              <Button onClick={handleSaveEdit} variant="primary">
+              <Button 
+                onClick={handleSaveEdit} 
+                variant="primary"
+                className="flex-1 sm:flex-none"
+              >
                 Guardar Cambios
               </Button>
             </div>
@@ -446,47 +471,47 @@ const DestinosTuristicos = () => {
 
       {/* Modal de Agregar Destino */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-md">
-            <h3 className="text-2xl font-semibold mb-4">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 sm:p-6">
+          <div className="bg-gray-800 rounded-2xl p-4 sm:p-6 w-full max-w-md mx-2 sm:mx-0 max-h-[90vh] overflow-y-auto">
+            <h3 className="text-2xl font-semibold mb-4 text-white">
               Agregar Nuevo Destino
             </h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Nombre</label>
+                <label className="block text-sm font-medium mb-2 text-gray-300">Nombre</label>
                 <input
                   type="text"
                   name="nombre"
                   value={newDestino.nombre}
                   onChange={handleNewInputChange}
-                  className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white"
+                  className="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   placeholder="Nombre del destino"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-2 text-gray-300">
                   Descripción
                 </label>
                 <textarea
                   name="descripcion"
                   value={newDestino.descripcion}
                   onChange={handleNewInputChange}
-                  rows="3"
-                  className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white resize-none"
+                  rows="4"
+                  className="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white resize-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   placeholder="Descripción del destino"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Precio</label>
+                <label className="block text-sm font-medium mb-2 text-gray-300">Precio</label>
                 <input
                   type="number"
                   name="precio"
                   value={newDestino.precio}
                   onChange={handleNewInputChange}
-                  className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white"
+                  className="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   placeholder="30000"
                   min="0"
                   step="1000"
@@ -494,7 +519,7 @@ const DestinosTuristicos = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-2 text-gray-300">
                   URL de la Imagen
                 </label>
                 <input
@@ -502,17 +527,25 @@ const DestinosTuristicos = () => {
                   name="imagen"
                   value={newDestino.imagen}
                   onChange={handleNewInputChange}
-                  className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white"
+                  className="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   placeholder="https://ejemplo.com/imagen.jpg"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 mt-6">
-              <Button onClick={handleCloseAddModal} variant="secondary">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
+              <Button 
+                onClick={handleCloseAddModal} 
+                variant="secondary"
+                className="flex-1 sm:flex-none"
+              >
                 Cancelar
               </Button>
-              <Button onClick={handleSaveNewDestino} variant="primary">
+              <Button 
+                onClick={handleSaveNewDestino} 
+                variant="primary"
+                className="flex-1 sm:flex-none"
+              >
                 Agregar Destino
               </Button>
             </div>

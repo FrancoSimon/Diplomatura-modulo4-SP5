@@ -1,28 +1,40 @@
-// Componente Button mejorado
+// Componente Button mejorado y responsive
 export const Button = ({ 
   children, 
   onClick, 
   variant = "primary",
   disabled = false,
-  type = "button"
+  type = "button",
+  className = "",
+  size = "medium" // Nueva prop para controlar el tamaño
 }) => {
   // Clases base comunes para todos los botones
   const baseClasses = `
     inline-flex items-center justify-center
     rounded-xl font-semibold transition-all duration-200
     cursor-pointer select-none
-    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500
-    disabled:opacity-50 disabled:cursor-not-allowed
-    min-h-[44px] /* Altura mínima consistente para accesibilidad */
+    whitespace-nowrap
+    ${disabled ? 'opacity-60 cursor-not-allowed' : ''}
   `;
 
-  // Clases responsivas para tamaño y espaciado
-  const responsiveClasses = `
-    text-sm px-4 py-2
-    sm:text-base sm:px-5 sm:py-2.5
-    md:text-lg md:px-6
-    lg:px-7
-  `;
+  // Tamaños del botón
+  const sizeClasses = {
+    small: `
+      text-xs px-3 py-1 min-h-8
+    `,
+    medium: `
+      text-sm px-4 py-2 min-h-10
+      sm:text-base sm:px-5 sm:py-2.5
+    `,
+    large: `
+      text-base px-6 py-3 min-h-12
+      sm:text-lg sm:px-7 sm:py-3.5
+    `,
+    auto: `
+      text-sm px-3 py-1 min-h-8
+      flex-1 min-w-0
+    `
+  };
 
   // Variantes de estilo
   const variantClasses = {
@@ -30,27 +42,25 @@ export const Button = ({
       bg-gray-700 text-white
       hover:bg-amber-600 hover:shadow-lg
       active:bg-amber-700 active:shadow-md
-      focus:ring-amber-500
+      ${!disabled && 'hover:transform hover:scale-105'}
     `,
     secondary: `
       bg-gray-100 text-gray-900 border border-gray-300
       hover:bg-amber-600 hover:text-white hover:border-amber-600
       active:bg-amber-700 active:border-amber-700
-      focus:ring-amber-500
     `,
     tertiary: `
       bg-transparent text-white border border-white
       hover:bg-amber-600 hover:text-white hover:border-amber-600
       active:bg-amber-700 active:border-amber-700
-      focus:ring-amber-500
+    `,
+    icon: `
+      bg-transparent text-white border-none
+      hover:bg-amber-600 hover:text-white
+      active:bg-amber-700
+      p-2 min-h-0
     `
   };
-
-  // Clases para estado disabled
-  const disabledClasses = disabled ? `
-    opacity-60 cursor-not-allowed
-    hover:transform-none hover:shadow-none
-  ` : '';
 
   return (
     <button
@@ -59,9 +69,9 @@ export const Button = ({
       disabled={disabled}
       className={`
         ${baseClasses}
-        ${responsiveClasses}
+        ${sizeClasses[size]}
         ${variantClasses[variant]}
-        ${disabledClasses}
+        ${className}
       `}
     >
       {children}
