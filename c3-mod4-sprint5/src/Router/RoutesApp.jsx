@@ -5,6 +5,7 @@ import DestinosTuristicos from "../components/DestinosTuristicos.jsx";
 import WeatherCard from "../components/WeatherCard.jsx";
 import SearchForm from "../components/SearchFrom.jsx";
 import ContactoForm from "../components/ContactoFrom.jsx";
+import Login from "../components/Login.jsx"
 
 const RoutesApp = () => {
   return (
@@ -40,10 +41,8 @@ const RoutesApp = () => {
         }
       />
 
-      <Route
-        path="/contacto"
-        element={<ContactoForm />}
-      />
+      <Route path="/contacto" element={<ContactoForm />} />
+      <Route path="/Login" element={<Login />} />
 
       <Route
         path="/favoritos"
@@ -54,5 +53,3 @@ const RoutesApp = () => {
 };
 
 export default RoutesApp;
-
-

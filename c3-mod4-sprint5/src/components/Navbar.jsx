@@ -205,13 +205,13 @@ const Navbar = () => {
             >
               <i className="bi bi-github"></i>
             </a>
-            <a
-              href="/"
+            <Link
+              to="/Login"
               className="text-white hover:text-sky-100 transition-all duration-300 hover:scale-125"
               aria-label="Iniciar sesión"
             >
               <i className="bi bi-box-arrow-in-right"></i>
-            </a>
+            </Link>
           </div>
         </div>
 

@@ -265,7 +265,8 @@ const DestinosTuristicos = () => {
         Destinos
       </h1>
       <h2 className="text-xl sm:text-2xl lg:text-3xl p-4 mb-6 text-center px-4 max-w-4xl">
-        Explora los destinos imperdibles para tus próximas aventuras en Fiambalá.
+        Explora los destinos imperdibles para tus próximas aventuras en
+        Fiambalá.
       </h2>
 
       {/* Formulario de Búsqueda */}
@@ -287,9 +288,9 @@ const DestinosTuristicos = () => {
               setSearch(soloTexto);
             }}
           />
-          <Button 
-            type="submit" 
-            variant="secondary" 
+          <Button
+            type="submit"
+            variant="secondary"
             size="auto"
             className="whitespace-nowrap min-h-[44px] flex items-center justify-center"
           >
@@ -297,7 +298,7 @@ const DestinosTuristicos = () => {
             Buscar Destino
           </Button>
         </form>
-        
+
         <Button
           onClick={handleOpenAddModal}
           variant="secondary"
@@ -329,7 +330,8 @@ const DestinosTuristicos = () => {
                   alt={turistico.nombre}
                   className="rounded-xl mb-4 w-full h-40 sm:h-48 object-cover"
                   onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/400x300/1f2937/6b7280?text=Imagen+No+Disponible';
+                    e.target.src =
+                      "https://via.placeholder.com/400x300/1f2937/6b7280?text=Imagen+No+Disponible";
                   }}
                 />
                 <h2 className="text-xl sm:text-2xl font-semibold mb-2 line-clamp-2">
@@ -356,7 +358,7 @@ const DestinosTuristicos = () => {
                 >
                   <i className="bi bi-heart-fill text-white group-hover:text-red-600 transition-colors text-sm sm:text-base"></i>
                   <span className="sr-only">Agregar Favorito</span>
-                  
+
                   <span className="hidden lg:block absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none border border-gray-600 z-20">
                     Agregar Favorito
                   </span>
@@ -368,7 +370,7 @@ const DestinosTuristicos = () => {
                 >
                   <i className="bi bi-trash3 text-white group-hover:text-black transition-colors text-sm sm:text-base"></i>
                   <span className="sr-only">Eliminar</span>
-                  
+
                   <span className="hidden lg:block absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none border border-gray-600 z-20">
                     Eliminar
                   </span>
@@ -380,7 +382,7 @@ const DestinosTuristicos = () => {
                 >
                   <i className="bi bi-pencil-square text-white group-hover:text-green-400 transition-colors text-sm sm:text-base"></i>
                   <span className="sr-only">Editar</span>
-                  
+
                   <span className="hidden lg:block absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none border border-gray-600 z-20">
                     Editar
                   </span>
@@ -395,7 +397,9 @@ const DestinosTuristicos = () => {
               No hay destinos para mostrar
             </p>
             <p className="text-gray-500 max-w-md mx-auto">
-              {search ? 'Intenta con otros términos de búsqueda' : 'Agrega el primer destino turístico usando el botón "Agregar Destino"'}
+              {search
+                ? "Intenta con otros términos de búsqueda"
+                : 'Agrega el primer destino turístico usando el botón "Agregar Destino"'}
             </p>
           </div>
         )}
@@ -405,11 +409,15 @@ const DestinosTuristicos = () => {
       {editingDestino && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 sm:p-6">
           <div className="bg-gray-800 rounded-2xl p-4 sm:p-6 w-full max-w-md mx-2 sm:mx-0 max-h-[90vh] overflow-y-auto">
-            <h3 className="text-2xl font-semibold mb-4 text-white">Editar Destino</h3>
+            <h3 className="text-2xl font-semibold mb-4 text-white">
+              Editar Destino
+            </h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-300">Nombre</label>
+                <label className="block text-sm font-medium mb-2 text-gray-300">
+                  Nombre
+                </label>
                 <input
                   type="text"
                   name="nombre"
@@ -450,15 +458,15 @@ const DestinosTuristicos = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
-              <Button 
-                onClick={handleCloseModal} 
+              <Button
+                onClick={handleCloseModal}
                 variant="secondary"
                 className="flex-1 sm:flex-none"
               >
                 Cancelar
               </Button>
-              <Button 
-                onClick={handleSaveEdit} 
+              <Button
+                onClick={handleSaveEdit}
                 variant="primary"
                 className="flex-1 sm:flex-none"
               >
@@ -479,7 +487,9 @@ const DestinosTuristicos = () => {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-300">Nombre</label>
+                <label className="block text-sm font-medium mb-2 text-gray-300">
+                  Nombre
+                </label>
                 <input
                   type="text"
                   name="nombre"
@@ -505,7 +515,9 @@ const DestinosTuristicos = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-300">Precio</label>
+                <label className="block text-sm font-medium mb-2 text-gray-300">
+                  Precio
+                </label>
                 <input
                   type="number"
                   name="precio"
@@ -534,15 +546,15 @@ const DestinosTuristicos = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
-              <Button 
-                onClick={handleCloseAddModal} 
+              <Button
+                onClick={handleCloseAddModal}
                 variant="secondary"
                 className="flex-1 sm:flex-none"
               >
                 Cancelar
               </Button>
-              <Button 
-                onClick={handleSaveNewDestino} 
+              <Button
+                onClick={handleSaveNewDestino}
                 variant="primary"
                 className="flex-1 sm:flex-none"
               >
